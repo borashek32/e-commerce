@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Banner;
 use Illuminate\Http\Request;
 use App\Http\Requests\ValidateBannerForm;
+use Illuminate\Support\Facades\DB;
 
 class BannerController extends Controller
 {
@@ -16,6 +17,22 @@ class BannerController extends Controller
         return view('backend.banners.index', compact('banners'));
     }
 
+    public function bannerStatus(Request $request)
+    {
+        if ($request->mode == 'true') {
+            DB::table('banners')->where('id', $request->id)
+                ->update(['status' => 'active']);
+        }
+        else {
+            DB::table('banners')->where('id', $request->id)
+                ->update(['status' => 'inactive']);
+        }
+        return response()->json([
+            'message' => 'Banner was successfully updated',
+            'status' => true
+        ]);
+    }
+
     public function create()
     {
         return view('backend.banners.create');
@@ -23,10 +40,15 @@ class BannerController extends Controller
 
     public function store(ValidateBannerForm $request)
     {
-        Banner::create($request->all());
+        $status = Banner::create($request->all());
 
-        return redirect()->route('banners.index')
-            ->with('success', 'New banner has been created successfully');
+        if ($status) {
+            return redirect()->route('banners.index')
+                ->with('success', 'New banner has been created successfully');
+        }
+        else {
+            return back()->with('error', 'Something went wrong');
+        }
     }
 
     public function show($id)
@@ -53,9 +75,19 @@ class BannerController extends Controller
     public function destroy($id)
     {
         $banner = Banner::find($id);
-        $banner->delete();
 
-        return redirect()->route('banners.index')
-            ->with('success', 'Banner was successfully deleted');
+        if ($banner) {
+            $status = $banner->delete();
+
+            if ($status) {
+                return redirect()->route('banners.index')
+                    ->with('success', 'Banner was successfully deleted');
+            }
+            else {
+                return back()->with('error', 'Something went wrong');
+            }
+        }
+
+        return back()->with('error', 'Data is not found');
     }
 }

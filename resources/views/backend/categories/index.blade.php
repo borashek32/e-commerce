@@ -6,12 +6,12 @@
     <!-- Content Header (Page header) -->
     <div class="d-sm-flex align-items-center justify-content-between mb-2">
         <h1 class="h3 mb-0 text-gray-800">
-            Banners({{ \App\Models\Banner::count() }})
+            Categories({{ \App\Models\Category::count() }})
         </h1>
     </div>
 
     <div class="mb-4">
-        <a href="{{ route('banners.create') }}">
+        <a href="{{ route('categories.create') }}">
             <button type="submit" class="btn btn-primary">Create</button>
         </a>
     </div>
@@ -33,54 +33,49 @@
                                 <tr>
                                     <th scope="col">No</th>
                                     <th scope="col">Title</th>
-                                    <th scope="col">Description</th>
                                     <th scope="col">Photo</th>
-                                    <th scope="col">Condition</th>
+                                    <th scope="col">is_parent</th>
+                                    <th scope="col">parent_id</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($banners as $banner)
+                                @foreach($categories as $category)
                                     <tr>
                                         <th scope="row">{{ $loop->iteration }}</th>
 
-                                        <td>{{ $banner->title }}</td>
-
-                                        <td>{!! $banner->description !!}</td>
+                                        <td>{{ $category->title }}</td>
 
                                         <td>
-                                            <img width="100px" src="{{ $banner->photo }}" alt="{{ $banner->title }}">
+                                            <img width="100px" src="{{ $category->photo }}" alt="{{ $category->title }}">
                                         </td>
 
-                                        <td>
-                                            @if($banner->condition=='banner')
-                                                <p class="text-muted">{{ $banner->condition }}</p>
-                                            @else
-                                                <p class="text-muted">{{ $banner->condition }}</p>
-                                            @endif
-                                        </td>
+                                        <td>{{ $category->is_parent===1 ? 'Yes' : 'No'}}</td>
+
+                                        <td>{{ $category->parent_id }}</td>
 
                                         <td>
-                                            <input type="checkbox" data-toggle="toggle" value="{{ $banner->id }}" data-on="Active"
-                                                   data-off="Inactive" {{ $banner->status=='active' ? 'checked' : '' }}
+                                            <input type="checkbox" data-toggle="toggle" value="{{ $category->id }}" data-on="Active"
+                                                   data-off="Inactive" {{ $category->status=='active' ? 'checked' : '' }}
                                                    data-onstyle="success" data-offstyle="secondary" name="toggle">
                                         </td>
 
                                         <td>
                                             <div class="row">
                                                 <div class="col-lg-3 col-xl-3 col-md-3 col-sm-3 col-3">
-                                                    <a href="{{ route('banners.edit', $banner) }}">
-                                                        <button class="btn btn-dark">Edit</button>
+                                                    <a href="{{ route('categories.edit', $category) }}">
+                                                        <button class="btn btn-secondary">Edit</button>
                                                     </a>
                                                 </div>
 
                                                 <div class="col-lg-6 col-xl-6 col-md-6 col-sm-6 col-6">
-                                                    <form action="{{ route('banners.destroy', $banner->id) }}" class="ml-2" method="POST">
+                                                    <form action="{{ route('categories.destroy', $category->id) }}"
+                                                        class="ml-2" method="POST">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button data-toggle="tooltip" type="submit" class="dltBtn btn btn-danger"
-                                                                data-id="{{ $banner->id }}" data-placement="bottom">Delete</button>
+                                                                data-id="{{ $category->id }}" data-placement="bottom">Delete</button>
                                                     </form>
                                                 </div>
                                             </div>
@@ -104,7 +99,7 @@
             var id=$(this).val();
             // alert(id);
             $.ajax({
-                url: "{{ route('banners.status') }}",
+                url: "{{ route('categories.status') }}",
                 type: "POST",
                 data: {
                     _token: '{{ csrf_token() }}',
@@ -139,7 +134,7 @@
             e.preventDefault();
             swal({
                 title: "Are you sure?",
-                text: "Once deleted, you will not be able to recover this banner!",
+                text: "Once deleted, you will not be able to recover this category!",
                 icon: "warning",
                 buttons: true,
                 dangerMode: true,
@@ -147,11 +142,11 @@
                 .then((willDelete) => {
                     if (willDelete) {
                         form.submit();
-                        swal("Banner has been deleted!", {
+                        swal("Category has been deleted!", {
                             icon: "success",
                         });
                     } else {
-                        swal("Banner is saved!");
+                        swal("Category is safe!");
                     }
                 });
         })
