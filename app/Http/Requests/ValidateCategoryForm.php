@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ValidateBannerForm extends FormRequest
+class ValidateCategoryForm extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,11 @@ class ValidateBannerForm extends FormRequest
     public function rules()
     {
         return [
-            'title'        =>   'required|string',
-            'description'  =>   'string|nullable',
-            'photo'        =>   'required',
-            'status'       =>   'required|in:active,inactive'
+            'title'        =>    'required|string',
+            'summary'      =>    'nullable',
+            'is_parent'    =>    'sometimes|in:1',
+            'parent_id'    =>    'nullable|exists:categories,id',
+            'status'       =>    'required|in:active,inactive'
         ];
     }
 
@@ -36,7 +37,6 @@ class ValidateBannerForm extends FormRequest
         return [
             'title.required' => 'The field "title" is required',
             'title.string' => 'The field "title" has to be string',
-            'photo.required' => 'The field "photo" is required',
             'status.required' => 'The field "status" is required'
         ];
     }

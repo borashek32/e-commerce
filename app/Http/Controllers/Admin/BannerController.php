@@ -58,7 +58,12 @@ class BannerController extends Controller
 
     public function edit(Banner $banner)
     {
-        return view('backend.banners.edit', compact('banner'));
+        if ($banner) {
+            return view('backend.banners.edit', compact('banner'));
+        }
+        else {
+            return back()->with('error', 'Something went wrong');
+        }
     }
 
     public function update(ValidateBannerForm $request, Banner $banner)
@@ -66,6 +71,8 @@ class BannerController extends Controller
         $banner->photo         =   $request->photo;
         $banner->title         =   $request->title;
         $banner->description   =   $request->description;
+        $banner->status        =   $request->status;
+        $banner->condition     =   $request->condition;
         $banner->save();
 
         return redirect()->route('banners.index')

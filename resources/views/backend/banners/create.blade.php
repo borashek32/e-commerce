@@ -40,8 +40,10 @@
                                     <label for="title">
                                         Title<span class="text-danger">*</span>
                                     </label>
+
                                     <input type="text" name="title" class="form-control @error('title') border border-danger @enderror"
-                                           id="title" placeholder="Add some title of a new banner" value="{{ old('title') }}" required>
+                                           id="title" placeholder="Add some title of a new banner" value="{{ old('title') }}">
+
                                     <div>
                                         @error('title')
                                             @include('backend.includes.messages_errors')
@@ -67,8 +69,9 @@
                                                 <i class="fa fa-picture-o"></i> Choose
                                             </a>
                                         </span>
-                                        <input id="thumbnail" class="form-control @error('photo') border border-danger @enderror"
-                                               type="text" name="photo">
+
+                                        <input id="thumbnail" class="form-control text-secondary @error('photo') border border-danger @enderror"
+                                               type="text" name="photo" value="Add a picture to a new banner">
                                     </div>
 
                                     <div>
@@ -82,11 +85,15 @@
 
                                 <div class="form-group">
                                     <label for="condition">Condition</label>
+
                                     <select class="form-select col-lg-4 col-xl-4 col-md-4 col-sm-6 col-8 form-select-lg mb-3"
                                         name="condition" aria-label=".form-select-lg example">
-                                        <option selected value="banner" {{ old('condition')=='banner' ? 'selected' : '' }}>
+                                        <option selected value="">-- Choose condition --</option>
+
+                                        <option value="banner" {{ old('condition')=='banner' ? 'selected' : '' }}>
                                             Banner
                                         </option>
+
                                         <option value="promo" {{ old('condition')=='promo' ? 'selected' : '' }}>
                                             Promo
                                         </option>
@@ -94,13 +101,35 @@
                                 </div>
 
                                 <div class="form-group">
+                                    <label for="status">
+                                        Status<span class="text-danger">*</span>
+                                    </label>
+
+                                    <select class="form-select col-lg-4 col-xl-4 col-md-4 col-sm-6 col-8 form-select-lg mb-3"
+                                            name="status" aria-label=".form-select-lg example">
+                                        <option selected value="">-- Choose status --</option>
+
+                                        <option value="active" {{ old('status')=='active' ? 'selected' : '' }}>
+                                            Active
+                                        </option>
+
+                                        <option value="inactive" {{ old('status')=='inactive' ? 'selected' : '' }}>
+                                            Inactive
+                                        </option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
                                     <button type="submit" class="btn btn-primary">Add banner</button>
-                                    <a href="{{ route('banners.index') }}">
-                                        <button type="submit" class="btn btn-danger ml-4">Back</button>
-                                    </a>
                                 </div>
                             </div>
                         </form>
+
+                        <div style="margin-top: -20px; margin-bottom: 20px; margin-left: -10px">
+                            <a href="{{ route('banners.index') }}">
+                                <button type="submit" class="btn btn-danger ml-4">Back</button>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -113,16 +142,4 @@
         echo('$(window).load(function(){$("#' . $modal . '").modal(\'show\');});');
     }
     ?>
-@endsection
-
-@section('scripts')
-    <script src="/vendor/laravel-filemanager/js/stand-alone-button.js"></script>
-    <script>
-        $('#lfm').filemanager('image');
-    </script>
-    <script>
-        $(document).ready(function() {
-            $('#description').summernote();
-        });
-    </script>
 @endsection

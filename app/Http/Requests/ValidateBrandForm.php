@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ValidateBannerForm extends FormRequest
+class ValidateBrandForm extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +25,6 @@ class ValidateBannerForm extends FormRequest
     {
         return [
             'title'        =>   'required|string',
-            'description'  =>   'string|nullable',
             'photo'        =>   'required',
             'status'       =>   'required|in:active,inactive'
         ];

@@ -35,18 +35,19 @@
 <script src="{{ asset('assets/backend/js/demo/chart-area-demo.js') }}"></script>
 <script src="{{ asset('assets/backend/js/demo/chart-pie-demo.js') }}"></script>
 
-{{--Bootstrap swich button--}}
+{{-- Bootstrap swich button --}}
 <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
 
-{{--Laravel filemanager standalone--}}
+{{-- Laravel filemanager standalone --}}
 <script src="/vendor/laravel-filemanager/js/stand-alone-button.js"></script>
+
+{{-- Sweet alert --}}
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <script src="{{ asset('js/script.js') }}"></script>
 
 @yield('scripts')
 
 <script>
-    setTimeout(function () {
-        $('#alert').slideUp();
-    }, 4000);
+
 </script>

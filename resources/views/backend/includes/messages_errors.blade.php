@@ -1,10 +1,10 @@
-@if($errors->any())
-    <div class="alert alert-danger" id="alert">
-        @foreach($errors->all() as $error)
-            <li>
-                {{ $error }}
-            </li>
-        @endforeach
+@if(session('errors'))
+    <div class="alert alert-danger mt-2 alert-dismissible fade show" id="alert" role="alert">
+        {{ $message }}
+
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
     </div>
 @endif
 

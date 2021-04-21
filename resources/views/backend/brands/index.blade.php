@@ -6,12 +6,12 @@
     <!-- Content Header (Page header) -->
     <div class="d-sm-flex align-items-center justify-content-between mb-2">
         <h1 class="h3 mb-0 text-gray-800">
-            Categories({{ \App\Models\Category::count() }})
+            Brands({{ \App\Models\Brand::count() }})
         </h1>
     </div>
 
     <div class="mb-4">
-        <a href="{{ route('categories.create') }}">
+        <a href="{{ route('brands.create') }}">
             <button type="submit" class="btn btn-primary">Create</button>
         </a>
     </div>
@@ -28,49 +28,41 @@
                                     <th scope="col">No</th>
                                     <th scope="col">Title</th>
                                     <th scope="col">Photo</th>
-                                    <th scope="col">Has<br>subcategories</th>
-                                    <th scope="col">Parent<br>category</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($categories as $category)
+                                @foreach($brands as $brand)
                                     <tr>
                                         <th scope="row">{{ $loop->iteration }}</th>
 
-                                        <td>{{ $category->title }}</td>
+                                        <td>{{ $brand->title }}</td>
 
                                         <td>
-                                            <img width="100px" src="{{ $category->photo }}" alt="{{ $category->title }}">
-                                        </td>
-
-                                        <td>{{ $category->is_parent===1 ? 'Yes' : 'No'}}</td>
-
-                                        <td>
-                                            {{ \App\Models\Category::where('id', $category->parent_id)->value('title') }}
+                                            <img width="100px" src="{{ $brand->photo }}" alt="{{ $brand->title }}">
                                         </td>
 
                                         <td>
-                                            <input type="checkbox" data-toggle="toggle" value="{{ $category->id }}" data-on="Active"
-                                                   data-off="Inactive" {{ $category->status=='active' ? 'checked' : '' }}
-                                                   data-onstyle="success" data-offstyle="secondary" name="toggle_category">
+                                            <input type="checkbox" data-toggle="toggle" value="{{ $brand->id }}" data-on="Active"
+                                                   data-off="Inactive" {{ $brand->status=='active' ? 'checked' : '' }}
+                                                   data-onstyle="success" data-offstyle="secondary" name="toggle_banner">
                                         </td>
 
                                         <td>
                                             <div class="row">
-                                                <div class="col-lg-3 col-xl-3 col-md-3 col-sm-3 col-3">
-                                                    <a href="{{ route('categories.edit', $category) }}">
+                                                <div class="col-lg-2 col-xl-2 col-md-2 col-sm-2 col-2">
+                                                    <a href="{{ route('brands.edit', $brand) }}">
                                                         <button class="btn btn-dark">Edit</button>
                                                     </a>
                                                 </div>
 
                                                 <div class="col-lg-6 col-xl-6 col-md-6 col-sm-6 col-6">
-                                                    <form action="{{ route('categories.destroy', $category->id) }}" class="ml-3" method="POST">
+                                                    <form action="{{ route('brands.destroy', $brand->id) }}" method="POST">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button data-toggle="tooltip" type="submit" class="dltBtn_category mr-8 btn btn-danger"
-                                                                data-id="{{ $category->id }}" data-placement="bottom">Delete</button>
+                                                        <button data-toggle="tooltip" type="submit" class="dltBtn_banner btn btn-danger"
+                                                                data-id="{{ $brand->id }}" data-placement="bottom">Delete</button>
                                                     </form>
                                                 </div>
                                             </div>
@@ -88,12 +80,11 @@
 
 @section('scripts')
     <script>
-        $('input[name=toggle_category]').change(function () {
+        $('input[name=toggle_banner]').change(function () {
             var mode=$(this).prop('checked');
             var id=$(this).val();
-            // alert(id);
             $.ajax({
-                url: "{{ route('categories.status') }}",
+                url: "{{ route('banners.status') }}",
                 type: "POST",
                 data: {
                     _token: '{{ csrf_token() }}',
