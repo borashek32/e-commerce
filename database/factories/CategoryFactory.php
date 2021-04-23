@@ -24,11 +24,9 @@ class CategoryFactory extends Factory
         return [
             'title'        =>   $this->faker->word,
             'slug'         =>   $this->faker->unique()->slug,
-            'summary'      =>   $this->faker->sentences(3, true),
             'photo'        =>   $this->faker->imageUrl('100', '100'),
-            'is_parent'    =>   $this->faker->randomElement([true, false]),
-            'parent_id'    =>   $this->faker->randomElement(Category::pluck('id')->toArray()),
             'status'       =>   $this->faker->randomElement(['active', 'inactive']),
+            'description'  =>   $this->faker->sentences(5, true),
         ];
     }
 }

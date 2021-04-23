@@ -1,6 +1,6 @@
 @extends('backend.layouts.admin')
 
-@section('title', 'Add banner')
+@section('title', 'Add brand')
 
 @section('content')
     <!-- Content Header (Page header) -->
@@ -20,16 +20,6 @@
                     <p class="text-xs">
                         <span class="text-danger">*</span> - these fields are required
                     </p>
-
-{{--                    @if($errors->any())--}}
-{{--                        <div class="alert alert-danger">--}}
-{{--                            <ul>--}}
-{{--                                @foreach($errors-all())--}}
-{{--                                    <li>{{ $erorr }}</li>--}}
-{{--                                @endforeach--}}
-{{--                            </ul>--}}
-{{--                        </div>--}}
-{{--                    @endif--}}
 
                     <div class="card card-primary">
                         <!-- form start -->

@@ -8,6 +8,10 @@ $(document).ready(function() {
     $('#description').summernote();
 });
 
+$(document).ready(function() {
+    $('#summary').summernote();
+});
+
 
  // Banners
 $.ajaxSetup({
@@ -80,3 +84,8 @@ $('.dltBtn_category').click(function (e) {
             }
     });
 })
+
+
+ // Products
+ // toggle d-none for subcategories
+

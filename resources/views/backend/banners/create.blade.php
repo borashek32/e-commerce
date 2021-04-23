@@ -54,7 +54,7 @@
                                 <label for="description">Description</label>
 
                                 <div class="form-group">
-                                    <textarea placeholder="Add some description of the banner" id="description"
+                                    <textarea placeholder="Add some description about a new banner" id="description"
                                          class="form-control" name="description">{{ old('description') }}</textarea>
                                 </div>
 

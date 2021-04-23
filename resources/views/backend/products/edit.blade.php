@@ -1,6 +1,6 @@
 @extends('backend.layouts.admin')
 
-@section('title', 'Edit banner')
+@section('title', 'Edit product')
 
 @section('content')
     <!-- Content Header (Page header) -->

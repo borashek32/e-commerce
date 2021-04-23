@@ -25,6 +25,7 @@ class BrandFactory extends Factory
             'title'        =>   $this->faker->word,
             'slug'         =>   $this->faker->unique()->slug,
             'photo'        =>   $this->faker->imageUrl('100', '100'),
+            'description'  =>   $this->faker->sentences(5, true),
             'status'       =>   $this->faker->randomElement(['active', 'inactive'])
         ];
     }

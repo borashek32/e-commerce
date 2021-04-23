@@ -13,13 +13,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/', function () {
+//    return view('welcome');
+//});
 
 Auth::routes(['register' => false]);
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
 // Admin dashboard
@@ -36,9 +36,15 @@ Route::group(['prefix' => 'admin/', 'middleware' => 'auth'], function () {
     Route::resource('/categories', \App\Http\Controllers\Admin\CategoryController::class);
     Route::post('category_status', [\App\Http\Controllers\Admin\CategoryController::class, 'categoryStatus'])
         ->name('categories.status');
+    Route::post('/category/{id}/child', [\App\Http\Controllers\Admin\CategoryController::class, 'getChildByParentId']);
 
     // Brand
     Route::resource('/brands', \App\Http\Controllers\Admin\BrandController::class);
     Route::post('brand_status', [\App\Http\Controllers\Admin\BrandController::class, 'brandStatus'])
         ->name('brands.status');
+
+    // Product
+    Route::resource('/products', \App\Http\Controllers\Admin\ProductController::class);
+    Route::post('product_status', [\App\Http\Controllers\Admin\ProductController::class, 'productStatus'])
+        ->name('products.status');
 });

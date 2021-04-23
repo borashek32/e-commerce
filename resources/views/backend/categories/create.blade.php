@@ -1,6 +1,6 @@
 @extends('backend.layouts.admin')
 
-@section('title', 'Add banner')
+@section('title', 'Add category')
 
 @section('content')
     <!-- Content Header (Page header) -->
@@ -40,16 +40,16 @@
                                     </div>
                                 </div>
 
-                                <label for="summary">Description</label>
+                                <label for="summary">Summary</label>
 
                                 <div class="form-group">
-                                    <textarea placeholder="Add some description of the banner" id="description"
+                                    <textarea placeholder="Add some description about a new banner" id="description"
                                          class="form-control" name="summary">{{ old('summary') }}</textarea>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="is_parent">
-                                        Parent category<span class="text-danger">*</span>:
+                                        Is parent category<span class="text-danger">*</span>:
                                     </label>
 
                                     <input id="is_parent" class="ml-2" type="checkbox" name="is_parent" value="1" checked>Yes
@@ -64,7 +64,7 @@
                                         <option selected value="">-- Choose parent category --</option>
 
                                         @foreach($parent_cats as $parent_cat)
-                                            <option value="{{ $parent_cat->id }}" {{ old('parent_id')==$parent_cat->id ? 'selected' : '' }}>
+                                            <option value="{{ $parent_cat->id }}" {{ old('parent_id') == $parent_cat->id ? 'selected' : '' }}>
                                                 {{ $parent_cat->title }}
                                             </option>
                                         @endforeach
@@ -93,8 +93,8 @@
                                         Status<span class="text-danger">*</span>
                                     </label>
 
-                                    <select class="form-select col-lg-4 col-xl-4 col-md-4 col-sm-6 col-8 form-select-lg mb-3"
-                                            name="status" aria-label=".form-select-lg example">
+                                    <select class="form-select col-lg-4 col-xl-4 col-md-4 col-sm-6 col-8 form-select-lg mb-3
+                                        @error('status') border border-danger @enderror" name="status" aria-label=".form-select-lg example">
                                         <option selected value="">-- Choose status --</option>
 
                                         <option value="active" {{ old('status')=='active' ? 'selected' : '' }}>

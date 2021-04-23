@@ -1,6 +1,6 @@
 @extends('backend.layouts.admin')
 
-@section('title', 'Add banner')
+@section('title', 'Edit category')
 
 @section('content')
     <!-- Content Header (Page header) -->
@@ -51,14 +51,14 @@
 
                                 <div class="form-group">
                                     <label for="is_parent">
-                                        Parent category<span class="text-danger">*</span>:
+                                        Is parent category<span class="text-danger">*</span>:
                                     </label>
 
                                     <input id="is_parent" class="ml-2" type="checkbox" name="is_parent"
-                                        value="{{ $category->is_parent }}" {{ $category->is_parent==1 ? 'checked' : '' }}>Yes
+                                        value="{{ $category->is_parent }}" {{ $category->is_parent == 1 ? 'checked' : '' }}>Yes
                                 </div>
 
-                                <div class="form-group {{ $category->is_parent==1 ? 'd-none' : '' }}" id="parent_cat_div">
+                                <div class="form-group {{ $category->is_parent == 1 ? 'd-none' : '' }}" id="parent_cat_div">
                                     <label for="description">Parent Category</label>
 
                                     <select class="form-select col-lg-4 col-xl-4 col-md-4 col-sm-6 col-8 form-select-lg mb-3"
@@ -69,7 +69,7 @@
                                         </option>
 
                                         @foreach($parent_cats as $parent_cat)
-                                            <option value="{{ $parent_cat->id }}" {{ $parent_cat->id==$category->parent_id ? 'selected' :'' }}>
+                                            <option value="{{ $parent_cat->id }}" {{ $parent_cat->id == $category->parent_id ? 'selected' :'' }}>
                                                 {{ $parent_cat->title }}
                                             </option>
                                         @endforeach
