@@ -33,6 +33,7 @@
                                     <th scope="col">Size</th>
                                     <th scope="col">Condition</th>
                                     <th scope="col">Status</th>
+                                    <th scope="col">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -59,13 +60,13 @@
                                         <td>
                                             <div class="row">
                                                 <div class="col-lg-2 col-xl-2 col-md-2 col-sm-2 col-2">
-                                                    <a href="{{ route('banners.edit', $product) }}">
+                                                    <a href="{{ route('products.edit', $product) }}">
                                                         <button class="btn btn-dark">Edit</button>
                                                     </a>
                                                 </div>
 
                                                 <div class="col-lg-6 col-xl-6 col-md-6 col-sm-6 col-6">
-                                                    <form action="{{ route('banners.destroy', $product->id) }}" method="POST">
+                                                    <form action="{{ route('products.destroy', $product->id) }}" method="POST">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button data-toggle="tooltip" type="submit" class="dltBtn_banner ml-2 btn btn-danger"

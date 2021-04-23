@@ -3,7 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ValidateProductForm;
+use App\Models\Brand;
+use App\Models\Vendor;
+use App\Models\Category;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -34,62 +39,80 @@ class ProductController extends Controller
 
     public function create()
     {
-        return view('backend.products.create');
+        $categories = Category::orderBy('created_at', 'DESC')->get();
+        $brands = Brand::orderBy('created_at', 'DESC')->get();
+        $vendors = Vendor::orderBy('created_at', 'DESC')->get();
+
+        return view('backend.products.create',
+            compact('categories', 'brands', 'vendors'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(ValidateProductForm $request)
     {
+        $status = Product::create($request->all());
 
+        if ($status) {
+            return redirect()->route('products.index')
+                ->with('success', 'New product has been created successfully');
+        }
+        else {
+            return back()->with('error', 'Something went wrong');
+        }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function edit(Product $product)
     {
-        //
+        $categories = Category::orderBy('created_at', 'DESC')->get();
+        $brands     = Brand::orderBy('created_at', 'DESC')->get();
+        $vendors    = Vendor::orderBy('created_at', 'DESC')->get();
+
+        if ($product) {
+            return view('backend.products.edit',
+                compact('product','categories', 'brands', 'vendors'));
+        }
+        else {
+            return back()->with('error', 'Something went wrong');
+        }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        //
+        $product = Product::findOrFail($id);
+
+        $data = $request->all();
+
+        $status = $product->fill($data)->save();
+
+        if ($status) {
+            return redirect()->route('products.index')
+                ->with('success', 'Product has been updated successfully');
+        }
+        else {
+            return back()->with('error', 'Something went wrong');
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-        //
+        $product = Product::find($id);
+
+        if ($product) {
+            $status = $product->delete();
+
+            if ($status) {
+                return redirect()->route('products.index')
+                    ->with('success', 'Product was successfully deleted');
+            }
+            else {
+                return back()->with('error', 'Something went wrong');
+            }
+        }
+
+        return back()->with('error', 'Data is not found');
     }
 }

@@ -35,27 +35,13 @@ class CategoryController extends Controller
 
     public function create()
     {
-        $parent_cats = Category::where('is_parent', 1)
-            ->orderBy('title', 'ASC')
-            ->get();
-
-        return view('backend.categories.create', compact('parent_cats'));
+        return view('backend.categories.create');
     }
 
     public function store(ValidateCategoryForm $request)
     {
-        $data = $request->all();
-        $data['is_parent'] = $request->input('parent_id', 0);
-//        $data['is_parent'] = $request->input('is_parent', 0);
-        //
-        if($request->is_parent == 1) {
-            $data['parent_id'] = null;
-        }
-        if($request->is_parent == 0) {
-            $data['parent_id'] = true;
-        }
-        //
-        $status = Category::create($data);
+        $data   =  $request->all();
+        $status =  Category::create($data);
 
         if ($status) {
             return redirect()->route('categories.index')
@@ -71,16 +57,10 @@ class CategoryController extends Controller
         //
     }
 
-    public function edit($id)
+    public function edit(Category $category)
     {
-        $category = Category::find($id);
-
         if ($category) {
-            $parent_cats = Category::where('is_parent', 1)
-                ->orderBy('title', 'ASC')
-                ->get();
-
-            return view('backend.categories.edit', compact('category', 'parent_cats'));
+            return view('backend.categories.edit', compact('category'));
         }
         else {
             return redirect()->route('categories.index')
@@ -88,42 +68,20 @@ class CategoryController extends Controller
         }
     }
 
-    public function update(Request $request, $id)
+    public function update(ValidateCategoryForm $request, $id)
     {
         $category = Category::findOrFail($id);
-        if ($category) {
-            $this->validate($request, [
-                'title'     => 'required|string',
-                'summary'   => 'string|nullable',
-                'is_parent' => 'sometimes|in:1',
-                'parent_id' => 'nullable|exists:categories,id',
-                'status'    => 'required|in:active,inactive'
-            ]);
 
-            $data = $request->all();
+        $data = $request->all();
 
-//            if ($request->is_parent == 1) {
-//                $data['parent_id'] = null;
-//            }
+        $status = $category->fill($data)->save();
 
-            //$data['is_parent'] = $request->input('is_parent', 0);
-            //
-            if($request->is_parent == 1) {
-                $data['parent_id'] = null;
-            }
-            //
-            $status = $category->fill($data)->save();
-
-            if ($status) {
-                return redirect()->route('categories.index')
-                    ->with('success', 'Category has been updated successfully');
-            }
-            else {
-                return back()->with('error', 'Something went wrong');
-            }
+        if ($status) {
+            return redirect()->route('categories.index')
+                ->with('success', 'Category has been updated successfully');
         }
         else {
-            return back()->with('error', 'Category was not found');
+            return back()->with('error', 'Something went wrong');
         }
     }
 
@@ -142,36 +100,6 @@ class CategoryController extends Controller
                 return back()->with('error', 'Something went wrong');
             }
         }
-
         return back()->with('error', 'Data is not found');
-    }
-
-    public function getChildByParentId(Request $request, $id)
-    {
-        $category = Category::find($request->id);
-
-        if ($category) {
-            $child_id = Category::getChildByParentId($request->id);
-
-            if (count($child_id) <= 0) {
-                return response()->json([
-                    'status' => false,
-                    'data'   => null,
-                    'msg'    => 'Category does not have any subcategories'
-                ]);
-            }
-            return response()->json([
-                'status' => true,
-                'data'   => $child_id,
-                'msg'    => ''
-            ]);
-        }
-        else {
-            return response()->json([
-                'status' => false,
-                'data'   => null,
-                'msg'    => 'Category is not found'
-            ]);
-        }
     }
 }

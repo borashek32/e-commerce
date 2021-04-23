@@ -50,7 +50,7 @@
                                         </td>
 
                                         <td>
-                                            <div class="row">
+                                            <div class="row text-left">
                                                 <div class="col-lg-2 col-xl-2 col-md-2 col-sm-2 col-2">
                                                     <a href="{{ route('brands.edit', $brand) }}">
                                                         <button class="btn btn-dark">Edit</button>

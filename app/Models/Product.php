@@ -19,12 +19,13 @@ class Product extends Model
         'slug',
         'summary',
         'price',
+        'brand_id',
         'offer_price',
         'discount',
         'condition',
         'status',
         'vendor_id',
-        'cat_id',
+        'category_id',
         'child_cat_id',
         'size',
         'slug'
@@ -39,13 +40,13 @@ class Product extends Model
         ];
     }
 
-//    public function categories()
-//    {
-//        return $this->belongsToMany(Category::class);
-//    }
-//
-//    public function brand()
-//    {
-//        return $this->belongsTo(Brand::class);
-//    }
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class);
+    }
 }

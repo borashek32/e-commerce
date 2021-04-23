@@ -17,7 +17,7 @@ class BrandController extends Controller
         return view('backend.brands.index', compact('brands'));
     }
 
-    public function bannerStatus(Request $request)
+    public function brandStatus(Request $request)
     {
         if ($request->mode == 'true') {
             DB::table('brands')->where('id', $request->id)

@@ -51,11 +51,13 @@
                                     </div>
                                 </div>
 
-                                <label for="description">Description</label>
+                                <div>
+                                    <label for="description">Description</label>
 
-                                <div class="form-group">
-                                    <textarea placeholder="Add some description about a new banner" id="description"
-                                         class="form-control" name="description">{{ old('description') }}</textarea>
+                                    <div class="form-group">
+                                        <textarea placeholder="Add some description about a new banner" id="description"
+                                            class="form-control" name="description">{{ old('description') }}</textarea>
+                                    </div>
                                 </div>
 
                                 <div class="form-group">

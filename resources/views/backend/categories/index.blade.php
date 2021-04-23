@@ -28,8 +28,6 @@
                                     <th scope="col">No</th>
                                     <th scope="col">Title</th>
                                     <th scope="col">Photo</th>
-                                    <th scope="col">Has<br>subcategories</th>
-                                    <th scope="col">Parent<br>category</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Actions</th>
                                 </tr>
@@ -45,12 +43,6 @@
                                             <img width="100px" src="{{ $category->photo }}" alt="{{ $category->title }}">
                                         </td>
 
-                                        <td>{{ $category->is_parent===1 ? 'Yes' : 'No'}}</td>
-
-                                        <td>
-                                            {{ \App\Models\Category::where('id', $category->parent_id)->value('title') }}
-                                        </td>
-
                                         <td>
                                             <input type="checkbox" data-toggle="toggle" value="{{ $category->id }}" data-on="Active"
                                                    data-off="Inactive" {{ $category->status=='active' ? 'checked' : '' }}
@@ -58,20 +50,22 @@
                                         </td>
 
                                         <td>
-                                            <div class="row">
-                                                <div class="col-lg-3 col-xl-3 col-md-3 col-sm-3 col-3">
+                                            <div class="row text-left">
+                                                <div class="col-lg-1 col-xl-1 col-md-1 col-sm-1 col-1">
                                                     <a href="{{ route('categories.edit', $category) }}">
                                                         <button class="btn btn-dark">Edit</button>
                                                     </a>
                                                 </div>
 
                                                 <div class="col-lg-6 col-xl-6 col-md-6 col-sm-6 col-6">
-                                                    <form action="{{ route('categories.destroy', $category->id) }}" class="ml-3" method="POST">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button data-toggle="tooltip" type="submit" class="dltBtn_category mr-8 btn btn-danger"
-                                                                data-id="{{ $category->id }}" data-placement="bottom">Delete</button>
-                                                    </form>
+                                                    <div style="margin-left: 26px">
+                                                        <form action="{{ route('categories.destroy', $category->id) }}" method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button data-toggle="tooltip" type="submit" class="dltBtn_category mr-8 btn btn-danger"
+                                                                    data-id="{{ $category->id }}" data-placement="bottom">Delete</button>
+                                                        </form>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </td>

@@ -25,12 +25,12 @@ class CreateProductsTable extends Migration
 
             $table->float('price', 10, 2)->default(0);
             $table->float('offer_price',10, 2)->default(0);
-            $table->float('discount', 10,2)->default(0);
+            $table->float('discount', 10,2)->nullable();
 
-            $table->unsignedBigInteger('vendor_id')->nullable();
-            $table->enum('status', ['active', 'inactive'])->default('active');
+            $table->foreignId('vendor_id')->constrained()->onDelete('cascade');
             $table->foreignId('brand_id')->constrained()->onDelete('cascade');
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
+            $table->enum('status', ['active', 'inactive'])->default('active');
 
             $table->timestamps();
         });

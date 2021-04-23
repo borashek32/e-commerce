@@ -55,13 +55,11 @@ $('#is_parent').change(function (e) {
         $('#parent_cat_div').removeClass('d-none');
     }
 })
-
 $.ajaxSetup({
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-
 $('.dltBtn_category').click(function (e) {
     var form=$(this).closest('form');
     var dataID=$(this).data('id');

@@ -32,7 +32,7 @@
                                     </label>
 
                                     <input type="text" name="title" class="form-control @error('title') border border-danger @enderror"
-                                           id="title" placeholder="Add some title of a new banner" value="{{ old('title') }}">
+                                           id="title" placeholder="Add some title of a new product" value="{{ old('title') }}">
 
                                     <div>
                                         @error('title')
@@ -42,20 +42,21 @@
                                 </div>
 
                                 <div>
-                                    <label for="summary">Summary</label>
-
-                                    <div class="form-group">
-                                        <textarea placeholder="Add some summery description about a new product" id="summary"
-                                             class="form-control" name="summary">{{ old('summary') }}</textarea>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <label for="description">Description</label>
+                                    <label for="description">
+                                        Description<span class="text-danger">*</span>
+                                    </label>
 
                                     <div class="form-group">
                                         <textarea placeholder="Add some description about a new product" id="description"
-                                             class="form-control" name="description">{{ old('description') }}</textarea>
+                                             class="form-control @error('description') border border-danger @enderror" name="description">
+                                            {{ old('description') }}
+                                        </textarea>
+                                    </div>
+
+                                    <div>
+                                        @error('description')
+                                            @include('backend.includes.messages_errors')
+                                        @enderror
                                     </div>
                                 </div>
 
@@ -65,7 +66,7 @@
                                     </label>
 
                                     <input type="number" name="stock" class="form-control @error('stock') border border-danger @enderror"
-                                           id="stock" placeholder="Stock" value="{{ old('stock') }}">
+                                           id="stock" placeholder="Quantity of products at the stock" value="{{ old('stock') }}">
 
                                     <div>
                                         @error('stock')
@@ -91,17 +92,28 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="discount">Discount</label>
+                                    <label for="offer_price">
+                                        Offer price<span class="text-danger">*</span>
+                                    </label>
 
-                                    <input type="number" name="discoun" class="form-control
-                                        @error('discount') border border-danger @enderror" step="any"
-                                           id="discount" placeholder="Discount" value="{{ old('discount') }}">
+                                    <input type="number" name="offer_price" class="form-control
+                                        @error('offer_price') border border-danger @enderror" step="any"
+                                           id="price" placeholder="Offer price" value="{{ old('offer_price') }}">
 
                                     <div>
-                                        @error('discount')
+                                        @error('offer_price')
                                             @include('backend.includes.messages_errors')
                                         @enderror
                                     </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="discount">
+                                        Discount
+                                    </label>
+
+                                    <input type="number" name="discount" class="form-control" step="any"
+                                           id="discount" placeholder="Discount" value="{{ old('discount') }}">
                                 </div>
 
                                 <div class="form-group">
@@ -116,8 +128,9 @@
                                             </a>
                                         </span>
 
-                                        <input id="thumbnail" class="form-control text-secondary @error('photo') border border-danger @enderror"
-                                               type="text" name="photo" value="Add a picture to a new banner">
+                                        <input id="thumbnail" class="form-control text-secondary @error('photo')
+                                            border border-danger @enderror" type="text" name="photo"
+                                            value="Add a picture to a new product">
                                     </div>
 
                                     <div>
@@ -129,121 +142,150 @@
                                     <div id="holder" style="margin-top:15px;width: 150px;"></div>
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="brand">Brand</label>
+                                <div class="row">
+                                    <div class="col-lg-6 col-xl-6 col-md-6 col-sm-6 col-6">
+                                        <div class="form-group">
+                                            <label for="brand_id">
+                                                Brand<span class="text-danger">*</span>
+                                            </label>
 
-                                    <select class="form-select col-lg-4 col-xl-4 col-md-4 col-sm-6 col-8 form-select-lg mb-3"
-                                            name="condition" aria-label=".form-select-lg example">
-                                        <option selected value="">-- Choose brand --</option>
+                                            <select class="form-select form-select-lg mb-3 @error('brand_id') border border-danger @enderror"
+                                                    name="brand_id" aria-label=".form-select-lg example">
+                                                <option selected value="">-- Choose brand --</option>
 
-                                        @foreach(\App\Models\Brand::get() as $brand)
-                                            <option value="{{ $brand->id }}">{{ $brand->title }}</option>
-                                        @endforeach
-                                    </select>
+                                                @foreach($brands as $brand)
+                                                    <option value="{{ $brand->id }}">{{ $brand->title }}</option>
+                                                @endforeach
+                                            </select>
+
+                                            <div>
+                                                @error('brand_id')
+                                                    @include('backend.includes.messages_errors')
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="category_id">
+                                                Category<span class="text-danger">*</span>
+                                            </label>
+
+                                            <select class="form-select form-select-lg mb-3 @error('category_id') border border-danger @enderror"
+                                                    name="category_id" aria-label=".form-select-lg example" id="cat_id">
+                                                <option selected value="">-- Choose category --</option>
+
+                                                @foreach($categories as $category)
+                                                    <option value="{{ $category->id }}">{{ $category->title }}</option>
+                                                @endforeach
+                                            </select>
+
+                                            @error('category_id')
+                                                @include('backend.includes.messages_errors')
+                                            @enderror
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="size">
+                                                Size<span class="text-danger">*</span>
+                                            </label>
+
+                                            <select class="form-select form-select-lg mb-3 @error('size') border border-danger @enderror"
+                                                    name="size" aria-label=".form-select-lg example">
+                                                <option selected value="">-- Choose size --</option>
+
+                                                <option value="S" {{ old('size')=='S' ? 'selected' : '' }}>
+                                                    Small
+                                                </option>
+
+                                                <option value="M" {{ old('size')=='M' ? 'selected' : '' }}>
+                                                    Medium
+                                                </option>
+
+                                                <option value="L" {{ old('size')=='L' ? 'selected' : '' }}>
+                                                    Large
+                                                </option>
+                                            </select>
+
+                                            @error('size')
+                                                @include('backend.includes.messages_errors')
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6 col-xl-6 col-md-6 col-sm-6 col-6">
+                                        <div class="form-group">
+                                            <label for="condition">
+                                                Condition<span class="text-danger">*</span>
+                                            </label>
+
+                                            <select class="form-select  form-select-lg mb-3 @error('condition') border border-danger @enderror"
+                                                    name="condition" aria-label=".form-select-lg example">
+                                                <option selected value="">-- Choose condition --</option>
+
+                                                <option value="new" {{ old('condition')=='new' ? 'selected' : '' }}>
+                                                    New
+                                                </option>
+
+                                                <option value="popular" {{ old('condition')=='popular' ? 'selected' : '' }}>
+                                                    Popular
+                                                </option>
+
+                                                <option value="winter" {{ old('condition')=='winter' ? 'selected' : '' }}>
+                                                    Winter
+                                                </option>
+                                            </select>
+
+                                            @error('condition')
+                                                @include('backend.includes.messages_errors')
+                                            @enderror
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="vendor_id">
+                                                Vendor
+                                            </label>
+
+                                            <select class="form-select form-select-lg mb-3 @error('vendor_id') border border-danger @enderror"
+                                                    name="vendor_id" aria-label=".form-select-lg example">
+                                                <option selected value="">-- Choose vendor --</option>
+
+                                                @foreach($vendors as $vendor)
+                                                    <option value="{{ $vendor->id }}">{{ $vendor->company }}</option>
+                                                @endforeach
+                                            </select>
+
+                                            @error('vendor_id')
+                                                @include('backend.includes.messages_errors')
+                                            @enderror
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="status">
+                                                Status<span class="text-danger">*</span>
+                                            </label>
+
+                                            <select class="form-select form-select-lg mb-3 @error('status') border border-danger @enderror"
+                                                    name="status" aria-label=".form-select-lg example">
+                                                <option selected value="">-- Choose status --</option>
+
+                                                <option value="active" {{ old('status')=='active' ? 'selected' : '' }}>
+                                                    Active
+                                                </option>
+
+                                                <option value="inactive" {{ old('status')=='inactive' ? 'selected' : '' }}>
+                                                    Inactive
+                                                </option>
+                                            </select>
+
+                                            @error('status')
+                                                @include('backend.includes.messages_errors')
+                                            @enderror
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="category">Category</label>
-
-                                    <select class="form-select col-lg-4 col-xl-4 col-md-4 col-sm-6 col-8 form-select-lg mb-3"
-                                            name="cat_id" aria-label=".form-select-lg example" id="cat_id">
-                                        <option selected value="">-- Choose category --</option>
-
-                                        @foreach(\App\Models\Category::where('is_parent', 1)->get() as $category)
-                                            <option value="{{ $category->id }}">{{ $category->title }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                                <div class="form-group d-none" id="child_cat_div">
-                                    <label for="child_cat_id">Subcategory</label>
-
-                                    <select class="form-select col-lg-4 col-xl-4 col-md-4 col-sm-6 col-8 form-select-lg mb-3"
-                                        name="child_cat_id" id="child_cat_id" aria-label=".form-select-lg example">
-                                        <option selected value="">-- Choose subcategory --</option>
-
-                                        @foreach(\App\Models\Category::where('parent_id', $category->id)->get() as $category)
-                                            <option value="{{ $category->id }}">{{ $category->title }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="size">Size</label>
-
-                                    <select class="form-select col-lg-4 col-xl-4 col-md-4 col-sm-6 col-8 form-select-lg mb-3"
-                                            name="size" aria-label=".form-select-lg example">
-                                        <option selected value="">-- Choose size --</option>
-
-                                        <option value="S" {{ old('size')=='S' ? 'selected' : '' }}>
-                                            Small
-                                        </option>
-
-                                        <option value="M" {{ old('size')=='M' ? 'selected' : '' }}>
-                                            Medium
-                                        </option>
-
-                                        <option value="L" {{ old('size')=='L' ? 'selected' : '' }}>
-                                            Large
-                                        </option>
-                                    </select>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="condition">Condition</label>
-
-                                    <select class="form-select col-lg-4 col-xl-4 col-md-4 col-sm-6 col-8 form-select-lg mb-3"
-                                            name="condition" aria-label=".form-select-lg example">
-                                        <option selected value="">-- Choose condition --</option>
-
-                                        <option value="new" {{ old('condition')=='new' ? 'selected' : '' }}>
-                                            New
-                                        </option>
-
-                                        <option value="popular" {{ old('condition')=='popular' ? 'selected' : '' }}>
-                                            Popular
-                                        </option>
-
-                                        <option value="winter" {{ old('condition')=='winter' ? 'selected' : '' }}>
-                                            Winter
-                                        </option>
-                                    </select>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="vendor_id">Vendor</label>
-
-                                    <select class="form-select col-lg-4 col-xl-4 col-md-4 col-sm-6 col-8 form-select-lg mb-3"
-                                            name="vendor_id" aria-label=".form-select-lg example">
-                                        <option selected value="">-- Choose vendor --</option>
-
-                                        @foreach(\App\Models\User::where('role', 'vendor')->get() as $vendor)
-                                            <option value="{{ $vendor->id }}">{{ $vendor->full_name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="status">
-                                        Status<span class="text-danger">*</span>
-                                    </label>
-
-                                    <select class="form-select col-lg-4 col-xl-4 col-md-4 col-sm-6 col-8 form-select-lg mb-3"
-                                            name="status" aria-label=".form-select-lg example">
-                                        <option selected value="">-- Choose status --</option>
-
-                                        <option value="active" {{ old('status')=='active' ? 'selected' : '' }}>
-                                            Active
-                                        </option>
-
-                                        <option value="inactive" {{ old('status')=='inactive' ? 'selected' : '' }}>
-                                            Inactive
-                                        </option>
-                                    </select>
-                                </div>
-
-                                <div class="form-group">
-                                    <button type="submit" class="btn btn-primary">Add banner</button>
+                                    <button type="submit" class="btn btn-primary">Add product</button>
                                 </div>
                             </div>
                         </form>
@@ -265,48 +307,4 @@
         echo('$(window).load(function(){$("#' . $modal . '").modal(\'show\');});');
     }
     ?>
-@endsection
-
-@section('scripts')
-    <script>
-        $('#cat_id').change(function (e) {
-            e.preventDefault();
-            var is_checked = $('#cat_id').prop('checked');
-            if (is_checked) {
-                $('#child_cat_div').addClass('d-none');
-                $('#child_cat_div').val('');
-            }
-            else {
-                $('#child_cat_div').removeClass('d-none');
-            }
-        })
-    </script>
-    <script>
-        $('#cat_id').change(function () {
-            var cat_id = $(this).val();
-            if (cat_id !=null) {
-                $.ajax({
-                    url: "/admin/category/"+cat_id+"/child",
-                    type: "POST",
-                    data: {
-                        _token: '{{ csrf_token() }}',
-                        cat_id: cat_id
-                    },
-                    success: function (response) {
-                        var html_option = <option value="">-- Choose subcategory --</option>
-                        if (response.status) {
-                            $('#child_cat_div').removeClass('d-none');
-                            $.each(response.data, function (id, title) {
-                                html_option += "<option value='"+id+"'>"+title+"</option>"
-                            });
-                        }
-                        else {
-                            $('#child_cat_div').addClass('d-none');
-                        }
-                        $('#child_cat_id').html(html_option);
-                    }
-                });
-            }
-        });
-    </script>
 @endsection

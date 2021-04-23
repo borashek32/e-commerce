@@ -25,7 +25,6 @@ class ValidateBannerForm extends FormRequest
     {
         return [
             'title'        =>   'required|string',
-            'description'  =>   'string|nullable',
             'photo'        =>   'required',
             'status'       =>   'required|in:active,inactive'
         ];
@@ -34,10 +33,10 @@ class ValidateBannerForm extends FormRequest
     public function messages()
     {
         return [
-            'title.required' => 'The field "title" is required',
-            'title.string' => 'The field "title" has to be string',
-            'photo.required' => 'The field "photo" is required',
-            'status.required' => 'The field "status" is required'
+            'title.required'   => 'The field "title" is required',
+            'title.string'     => 'The field "title" has to be string',
+            'photo.required'   => 'The field "photo" is required',
+            'status.required'  => 'The field "status" is required'
         ];
     }
 }

@@ -30,6 +30,7 @@
                                     <label for="title">
                                         Title<span class="text-danger">*</span>
                                     </label>
+
                                     <input type="text" name="title" class="form-control @error('title') border border-danger @enderror"
                                            id="title" placeholder="Add some title of a new category" value="{{ old('title') }}">
 
@@ -38,37 +39,6 @@
                                             @include('backend.includes.messages_errors')
                                         @enderror
                                     </div>
-                                </div>
-
-                                <label for="summary">Summary</label>
-
-                                <div class="form-group">
-                                    <textarea placeholder="Add some description about a new banner" id="description"
-                                         class="form-control" name="summary">{{ old('summary') }}</textarea>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="is_parent">
-                                        Is parent category<span class="text-danger">*</span>:
-                                    </label>
-
-                                    <input id="is_parent" class="ml-2" type="checkbox" name="is_parent" value="1" checked>Yes
-                                </div>
-
-                                <div class="form-group d-none" id="parent_cat_div">
-                                    <label for="description">Parent Category</label>
-
-                                    <select class="form-select col-lg-4 col-xl-4 col-md-4 col-sm-6 col-8 form-select-lg mb-3"
-                                        name="parent_id" aria-label=".form-select-lg example">
-
-                                        <option selected value="">-- Choose parent category --</option>
-
-                                        @foreach($parent_cats as $parent_cat)
-                                            <option value="{{ $parent_cat->id }}" {{ old('parent_id') == $parent_cat->id ? 'selected' : '' }}>
-                                                {{ $parent_cat->title }}
-                                            </option>
-                                        @endforeach
-                                    </select>
                                 </div>
 
                                 <div class="form-group">
@@ -82,10 +52,19 @@
                                         </span>
 
                                         <input id="thumbnail" class="form-control text-secondary" value="Add a photo to a new category"
-                                               type="text" name="photo">
+                                            type="text" name="photo">
                                     </div>
 
                                     <div id="holder" style="margin-top:15px;width: 150px;"></div>
+                                </div>
+
+                                <div>
+                                    <label for="description">Description</label>
+
+                                    <div class="form-group">
+                                        <textarea placeholder="Add some description about a new banner" id="description"
+                                            class="form-control" name="description">{{ old('description') }}</textarea>
+                                    </div>
                                 </div>
 
                                 <div class="form-group">

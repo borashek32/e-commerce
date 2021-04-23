@@ -32,19 +32,22 @@ Route::group(['prefix' => 'admin/', 'middleware' => 'auth'], function () {
     Route::post('banner_status', [\App\Http\Controllers\Admin\BannerController::class, 'bannerStatus'])
         ->name('banners.status');
 
-    // Category
+    // Categories
     Route::resource('/categories', \App\Http\Controllers\Admin\CategoryController::class);
     Route::post('category_status', [\App\Http\Controllers\Admin\CategoryController::class, 'categoryStatus'])
         ->name('categories.status');
     Route::post('/category/{id}/child', [\App\Http\Controllers\Admin\CategoryController::class, 'getChildByParentId']);
 
-    // Brand
+    // Brands
     Route::resource('/brands', \App\Http\Controllers\Admin\BrandController::class);
     Route::post('brand_status', [\App\Http\Controllers\Admin\BrandController::class, 'brandStatus'])
         ->name('brands.status');
 
-    // Product
+    // Products
     Route::resource('/products', \App\Http\Controllers\Admin\ProductController::class);
     Route::post('product_status', [\App\Http\Controllers\Admin\ProductController::class, 'productStatus'])
         ->name('products.status');
+
+    // Vendors
+    Route::resource('/vendors', \App\Http\Controllers\Admin\VendorController::class);
 });
