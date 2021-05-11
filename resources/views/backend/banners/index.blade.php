@@ -60,7 +60,7 @@
 
                                         <td>
                                             <div class="row text-left">
-                                                <div class="col-lg-2 col-xl-2 col-md-2 col-sm-2 col-2">
+                                                <div class="col-lg-3 col-xl-3 col-md-3 col-sm-3 col-3">
                                                     <a href="{{ route('banners.edit', $banner) }}">
                                                         <button class="btn btn-dark">Edit</button>
                                                     </a>
