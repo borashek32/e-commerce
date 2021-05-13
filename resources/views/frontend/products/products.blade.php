@@ -1,10 +1,10 @@
 @extends('frontend.layouts.master')
 
-@section('title', 'Home')
+@section('title', 'All Products')
 
 @section('content')
     <div style="text-align: center">
-        <h2 style="font-weight: 700; font-size: 30px; margin-bottom: 20px;margin-top: 20px">New in our shop:</h2>
+        <h2 style="font-weight: 700; font-size: 30px; margin-bottom: 20px;margin-top: 20px">All products in our shop:</h2>
     </div>
 
     <div class="row">
@@ -28,6 +28,31 @@
                             </a>
                         </h4>
 
+                        <h6 class="card-title">
+                            Category:
+
+                            <a href="{{ route('category', $product->category->slug) }}">
+                                {{ $product->category->title }}
+                            </a>
+                        </h6>
+
+                        <h6>
+                            Brand:
+
+                            <a href="">
+                                <img src="{{ $product->brand->photo }}" alt="Product brand" width="20px">
+
+                                {{ $product->brand->title }}
+                            </a>
+                        </h6>
+
+                        <div class="card-text">
+                            <p style="font-size: 12px">
+                                {!! Str::limit($product->description) !!}
+                            </p>
+                        </div>
+
+
                         <h5>
                             $ {{ number_format($product->offer_price, 2) }}
                             <small>
@@ -42,11 +67,7 @@
                         </a>
                     </div>
 
-                    <div class="card-footer">
-                        <small class="text-muted">
-                            ★ ★ ★ ★ ☆
-                        </small>
-                    </div>
+                    <div class="card-footer"><small class="text-muted">★ ★ ★ ★ ☆</small></div>
                 </div>
             </div>
         @empty
@@ -56,14 +77,7 @@
         @endforelse
     </div>
 
-    <div class="text-center">
-        <p style="font-weight: 600;font-size: 18px">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-            dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-            mollit anim id est laborum.
-        </p>
+    <div style="display: flex;justify-content: center">
+        {{ $products->links('vendor.pagination.bootstrap-4') }}
     </div>
 @endsection

@@ -28,13 +28,6 @@
                             </span>
                         </h4>
 
-                        <div class="card-text">
-                            <p style="font-size: 12px">
-                                {!! Str::limit($category->description) !!}
-                            </p>
-                        </div>
-
-
                         <a href="{{ route('category', $category->slug) }}">
                             View category >>>
                         </a>

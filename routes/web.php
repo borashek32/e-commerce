@@ -21,6 +21,18 @@ Route::get('/categories', [\App\Http\Controllers\Frontend\CategoryController::cl
 Route::get('/new-products', [\App\Http\Controllers\Frontend\ProductController::class, 'newProducts'])
     ->name('new-products');
 
+Route::get('/products', [\App\Http\Controllers\Frontend\ProductController::class, 'products'])
+    ->name('products');
+
+Route::get('/product/{slug}', [\App\Http\Controllers\Frontend\ProductController::class, 'product'])
+    ->name('product');
+
+Route::get('/brands', [\App\Http\Controllers\Frontend\BrandController::class, 'brands'])
+    ->name('brands');
+
+Route::get('/brand/{slug}', [\App\Http\Controllers\Frontend\BrandController::class, 'brand'])
+    ->name('brand');
+
 
 // Admin dashboard
 Route::group(['prefix' => 'admin/', 'middleware' => 'auth'], function () {

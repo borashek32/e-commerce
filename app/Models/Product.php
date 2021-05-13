@@ -49,4 +49,10 @@ class Product extends Model
     {
         return $this->belongsTo(Brand::class);
     }
+
+    public function relatedProducts()
+    {
+        return $this->hasMany(Product::class, 'category_id', 'category_id')
+            ->limit(10);
+    }
 }

@@ -1,5 +1,5 @@
 <!-- Footer-->
-<footer class="pt-4 my-md-5 pt-md-5 border-top">
+<footer class="pt-4 my-md-5 pt-md-5 border-top" style="transform: translateY(40px)">
     <div class="row">
         <div class="col-12 col-md">
             <img src="/img/digitalCoffeeSm.jpg" alt="Digital coffee design">
@@ -11,6 +11,16 @@
 
         <div class="col-6 col-md">
             <h6>Brands</h6>
+
+            <ul>
+                @foreach($brands as $brand)
+                    <li style="list-style: none; font-size: 12px; margin-left: -50px">
+                        <a href="{{ route('brand', $brand->slug) }}">
+                            {{ $brand->title }}
+                        </a>
+                    </li>
+                @endforeach
+            </ul>
         </div>
 
         <div class="col-6 col-md">

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Banner;
+use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -12,7 +13,10 @@ class CategoryController extends Controller
 {
     public function category($slug)
     {
-        $category = Category::where('slug', $slug)->first();
+        $category = Category::with('products')->where('slug', $slug)->first();
+
+        $brands = Brand::orderBy('id', 'DESC')
+            ->get();
 
         $banners = Banner::where([
             'status'     => 'active',
@@ -22,27 +26,26 @@ class CategoryController extends Controller
             ->limit('5')
             ->get();
 
-        $categories = Category::where([
-            'status'     => 'active'
-        ])
-            ->limit('6')
-            ->orderBy('id', 'DESC')
+        $categories = Category::orderBy('id', 'DESC')
             ->get();
 
         $products = Product::where([
             'status'     => 'active',
-            'condition'  => 'new'
+            'condition'  => 'new',
+            'category_id'=> $category->id
         ])
             ->orderBy('id', 'DESC')
-            ->limit('4')
-            ->get();
+            ->paginate(8);
 
-        return view('frontend.categories.one-category',
-            compact('category', 'categories', 'banners', 'products'));
+        return view('frontend.categories.category',
+            compact('category', 'brands', 'categories', 'banners', 'products'));
     }
 
     public function categories()
     {
+        $brands = Brand::orderBy('id', 'DESC')
+            ->get();
+
         $banners = Banner::where([
             'status'     => 'active',
             'condition'  => 'banner'
@@ -51,13 +54,10 @@ class CategoryController extends Controller
             ->limit('5')
             ->get();
 
-        $categories = Category::where([
-            'status'     => 'active'
-        ])
-            ->orderBy('id', 'DESC')
-            ->get();
+        $categories = Category::orderBy('id', 'DESC')
+            ->paginate(4);
 
         return view('frontend.categories.categories',
-            compact('categories','banners'));
+            compact('categories', 'brands', 'banners'));
     }
 }

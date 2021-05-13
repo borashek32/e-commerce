@@ -25,8 +25,8 @@
                 </div>
             </div>
         </div>
-    </div>
 
-    @include('frontend.includes.footer')
+        @include('frontend.includes.footer')
+    </div>
 </body>
 </html>
