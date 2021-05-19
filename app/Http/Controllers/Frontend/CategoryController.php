@@ -13,7 +13,8 @@ class CategoryController extends Controller
 {
     public function category($slug)
     {
-        $category = Category::with('products')->where('slug', $slug)->first();
+        $category = Category::with('products')
+            ->where('slug', $slug)->first();
 
         $brands = Brand::orderBy('id', 'DESC')
             ->get();
@@ -55,7 +56,7 @@ class CategoryController extends Controller
             ->get();
 
         $categories = Category::orderBy('id', 'DESC')
-            ->paginate(4);
+            ->get();
 
         return view('frontend.categories.categories',
             compact('categories', 'brands', 'banners'));

@@ -23,12 +23,20 @@
             All Categories
         </a>
 
+        <a href="{{ route('products') }}" class="list-group-item">
+            All Products
+        </a>
+
+        <a href="{{ route('brands') }}" class="list-group-item">
+            All Brands
+        </a>
+
         <a href="{{ route('new-products') }}" class="list-group-item">
             New Products
         </a>
 
-        <a href="{{ route('products') }}" class="list-group-item">
-            All Products
+        <a href="{{ route('winter-products') }}" class="list-group-item">
+            Winter Products
         </a>
     </div>
 </div>

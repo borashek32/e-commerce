@@ -6,6 +6,12 @@
 <body>
     @include('frontend.includes.nav')
 
+    <div class="row">
+        <div class="col-md-8">
+            @include('backend.includes.messages_success')
+        </div>
+    </div>
+
     <div class="container">
         <div style="transform: translateY(50px)">
             <div class="row">
@@ -28,5 +34,6 @@
 
         @include('frontend.includes.footer')
     </div>
+@yield('scripts')
 </body>
 </html>

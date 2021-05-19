@@ -31,7 +31,7 @@ class UserFactory extends Factory
             'photo'              =>  $this->faker->imageUrl('60', '60'),
             'role'               =>  $this->faker->randomElement(['admin', 'vendor', 'customer']),
             'status'             =>  $this->faker->randomElement(['active', 'inactive']),
-            'password'           =>  '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'password'           =>  '$2y$10$u2Nse592W3X6eUylYNGHeO6Yz2/Yxjb9jZn8NPMLwX7K/OemhUv7m', // password
             'remember_token'     =>  Str::random(10),
         ];
     }

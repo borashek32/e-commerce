@@ -1,19 +1,14 @@
 @extends('frontend.layouts.master')
 
-@section('title', 'Category')
+@section('title', 'New Products')
 
 @section('content')
     <div style="text-align: center">
-        <h2 style="font-weight: 700; font-size: 30px; margin-bottom: 20px;margin-top: 20px">
-            {{ $brand->title }}
-        </h2>
-
-
-        <p>{{ $brand->description }}</p>
+        <h2 style="font-weight: 700; font-size: 30px; margin-bottom: 20px;margin-top: 20px">Winter products in our shop:</h2>
     </div>
 
     <div class="row">
-        @foreach($brand->products as $product)
+        @forelse($products as $product)
             <div class="col-lg-3 col-md-4 col-sm-6 col-xl-3 mb-4">
                 <div class="card h-100">
                     <a href="{{ route('product', $product->slug) }}">
@@ -33,15 +28,33 @@
                             </a>
                         </h4>
 
-                        <h6>
-                            <a href="">
-                                Brand:
+                        <h6 class="card-title">
+                            Category:
 
+                            <a href="{{ route('category', $product->category->slug) }}">
+                                {{ $product->category->title }}
+                            </a>
+                        </h6>
+
+                        <h6>
+                            Brand:
+                            <a href="">
                                 <img src="{{ $product->brand->photo }}" alt="Product brand" width="20px">
 
                                 {{ $product->brand->title }}
                             </a>
                         </h6>
+
+                        <div class="card-text">
+                            <p style="font-size: 12px">
+                                {!! Str::limit($product->description) !!}
+                            </p>
+                        </div>
+
+
+                        <a href="{{ route('product', $product->slug) }}">
+                            Details >>>
+                        </a>
 
                         <h5>
                             $ {{ number_format($product->offer_price, 2) }}
@@ -51,20 +64,20 @@
                                 </del>
                             </small>
                         </h5>
-
-                        <div class="card-text">
-                            <p style="font-size: 12px">
-                                {!! Str::limit($product->description) !!}
-                            </p>
-                        </div>
-
-                        <a href="{{ route('product', $product->slug) }}">Details >>></a>
                     </div>
 
-                    <div class="card-footer"><small class="text-muted">★ ★ ★ ★ ☆</small></div>
+                    <div class="card-footer">
+                        <small class="text-muted">
+                            ★ ★ ★ ★ ☆
+                        </small>
+                    </div>
                 </div>
             </div>
-        @endforeach
+        @empty
+            <p class="text-center" style="margin-left: 6px">
+                Ничего не найдено по вашему запросу <strong>{{ request()->query('search') }}</strong>
+            </p>
+        @endforelse
     </div>
 
     <div style="display: flex;justify-content: center">

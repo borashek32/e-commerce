@@ -38,6 +38,33 @@ class ProductController extends Controller
             compact('banners','categories', 'products', 'brands'));
     }
 
+    public function winterProducts()
+    {
+        $products = Product::where([
+            'status'     => 'active',
+            'condition'  => 'winter'
+        ])
+            ->orderBy('id', 'DESC')
+            ->paginate(8);
+
+        $banners = Banner::where([
+            'status'     => 'active',
+            'condition'  => 'banner'
+        ])
+            ->orderBy('id', 'DESC')
+            ->limit('5')
+            ->get();
+
+        $categories = Category::orderBy('id', 'DESC')
+            ->get();
+
+        $brands = Brand::orderBy('id', 'DESC')
+            ->get();
+
+        return view('frontend.products.winter-products',
+            compact('banners','categories', 'products', 'brands'));
+    }
+
     public function products()
     {
         $products = Product::where([
@@ -68,7 +95,8 @@ class ProductController extends Controller
 
     public function product($slug)
     {
-        $product = Product::where('slug', $slug)->first();
+        $product = Product::with('relatedProducts')
+            ->where('slug', $slug)->first();
 
         $banners = Banner::where([
             'status'     => 'active',

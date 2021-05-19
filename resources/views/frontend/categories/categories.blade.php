@@ -49,8 +49,4 @@
             </p>
         @endforelse
     </div>
-
-    <div style="display: flex;justify-content: center">
-        {{ $categories->links('vendor.pagination.bootstrap-4') }}
-    </div>
 @endsection

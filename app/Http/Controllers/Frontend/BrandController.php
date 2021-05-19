@@ -23,8 +23,7 @@ class BrandController extends Controller
 
         $products = Product::where([
             'status'     => 'active',
-            'condition'  => 'new',
-            'category_id'=> $brand->id
+            'condition'  => 'new'
         ])
             ->orderBy('id', 'DESC')
             ->paginate(8);
@@ -44,9 +43,18 @@ class BrandController extends Controller
     public function brands()
     {
         $brands = Brand::orderBy('id', 'DESC')
+            ->orderBy('id', 'DESC')
+            ->get();
+
+        $banners = Banner::where([
+            'status'     => 'active',
+            'condition'  => 'banner'
+        ])
+            ->orderBy('id', 'DESC')
+            ->limit('5')
             ->get();
 
         return view('frontend.brands.brands',
-            compact('brands'));
+            compact('brands', 'banners', 'brands'));
     }
 }

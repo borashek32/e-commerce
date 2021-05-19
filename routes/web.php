@@ -1,15 +1,30 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-// Auth
-Route::get('/home', [\App\Http\Controllers\Frontend\IndexController::class, 'index'])->name('e-app');
 
-Auth::routes(['register' => false]);
+// Auth
+Auth::routes(['register' => true]);
+
+Route::get('/login', [\App\Http\Controllers\Frontend\IndexController::class, 'loginAuth'])
+    ->name('login-auth');
+
+Route::post('/login/user', [\App\Http\Controllers\Frontend\IndexController::class, 'loginSubmit'])
+    ->name('login-submit');
+
+Route::get('/register', [\App\Http\Controllers\Frontend\IndexController::class, 'registerAuth'])
+    ->name('register-auth');
+
+Route::post('/register/user', [\App\Http\Controllers\Frontend\IndexController::class, 'registerSubmit'])
+    ->name('register-submit');
 
 
 // Frontend
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])
+//Route::get('/home', [\App\Http\Controllers\Frontend\IndexController::class, 'index'])
+//    ->name('e-app');
+
+Route::get('/', [App\Http\Controllers\Frontend\IndexController::class, 'index'])
     ->name('home');
 
 Route::get('/category/{slug}', [\App\Http\Controllers\Frontend\CategoryController::class, 'category'])
@@ -20,6 +35,9 @@ Route::get('/categories', [\App\Http\Controllers\Frontend\CategoryController::cl
 
 Route::get('/new-products', [\App\Http\Controllers\Frontend\ProductController::class, 'newProducts'])
     ->name('new-products');
+
+Route::get('/winter-products', [\App\Http\Controllers\Frontend\ProductController::class, 'winterProducts'])
+    ->name('winter-products');
 
 Route::get('/products', [\App\Http\Controllers\Frontend\ProductController::class, 'products'])
     ->name('products');
@@ -35,7 +53,7 @@ Route::get('/brand/{slug}', [\App\Http\Controllers\Frontend\BrandController::cla
 
 
 // Admin dashboard
-Route::group(['prefix' => 'admin/', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => 'admin/', 'middleware' => ['auth', 'admin']], function () {
     Route::get('/', [\App\Http\Controllers\Admin\AdminController::class, 'admin'])
         ->name('admin');
 
@@ -62,4 +80,35 @@ Route::group(['prefix' => 'admin/', 'middleware' => 'auth'], function () {
 
     // Vendors
     Route::resource('/vendors', \App\Http\Controllers\Admin\VendorController::class);
+});
+
+
+// Seller dashboard
+Route::group(['prefix' => 'vendor/', 'middleware' => ['auth', 'vendor']], function () {
+    Route::get('/', [\App\Http\Controllers\Admin\AdminController::class, 'vendor'])
+        ->name('seller');
+});
+
+// User dashboard
+Route::group(['prefix' => 'user'], function () {
+    Route::get('/dashboard', [\App\Http\Controllers\User\UserController::class, 'userDashboard'])
+        ->name('user.dashboard');
+
+    Route::get('/order', [\App\Http\Controllers\User\UserController::class, 'userOrder'])
+        ->name('user.order');
+
+    Route::get('/address', [\App\Http\Controllers\User\UserController::class, 'userAddress'])
+        ->name('user.address');
+
+    Route::get('/account-details', [\App\Http\Controllers\User\UserController::class, 'userAccount'])
+        ->name('user.account-details');
+
+    Route::post('/billing/address/{id}', [\App\Http\Controllers\User\AddressController::class, 'billingAddress'])
+        ->name('user.billing-address');
+
+    Route::post('/shipping/address/{id}', [\App\Http\Controllers\User\AddressController::class, 'shippingAddress'])
+        ->name('user.shipping-address');
+
+    Route::post('/update/account/{id}', [\App\Http\Controllers\User\UserController::class, 'updateAccount'])
+        ->name('account.update');
 });
