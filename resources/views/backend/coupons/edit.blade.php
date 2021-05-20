@@ -41,14 +41,19 @@
                                     <label for="type">
                                         Type<span class="text-danger">*</span>
                                     </label>
-                                    <input type="text" name="type" class="form-control @error('type') border border-danger @enderror"
-                                           id="type" placeholder="Add a type of the coupon" value="{{ $coupon->type }}">
 
-                                    <div>
-                                        @error('type')
-                                            @include('backend.includes.messages_errors')
-                                        @enderror
-                                    </div>
+                                    <select class="form-select col-lg-4 col-xl-4 col-md-4 col-sm-6 col-8 form-select-lg mb-3"
+                                            name="type" aria-label=".form-select-lg example">
+                                        <option selected value="{{ $coupon->status }}">-- Choose status --</option>
+
+                                        <option value="fixed" {{ $coupon->type=='fixed' ? 'selected' : '' }}>
+                                            Fixed
+                                        </option>
+
+                                        <option value="percent" {{ $coupon->type=='percent' ? 'selected' : '' }}>
+                                            Percent
+                                        </option>
+                                    </select>
                                 </div>
 
                                 <div class="form-group">

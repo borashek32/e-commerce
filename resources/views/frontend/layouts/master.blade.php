@@ -5,7 +5,7 @@
 </head>
 <body>
     <header id="header-ajax">
-        @include('frontend.layouts.header')
+        @include('frontend.includes.header')
     </header>
 
     <div class="row">

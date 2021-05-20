@@ -114,15 +114,23 @@ Route::group(['prefix' => 'user'], function () {
 
     Route::post('/update/account/{id}', [\App\Http\Controllers\User\UserController::class, 'updateAccount'])
         ->name('account.update');
-
-
-    // Cart
-    Route::post('/cart/store', [\App\Http\Controllers\User\CartController::class, 'cartStore'])
-        ->name('cart.store');
-
-    Route::post('/cart/delete', [\App\Http\Controllers\User\CartController::class, 'cartDelete'])
-        ->name('cart.delete');
-
-    Route::get('/cart', [\App\Http\Controllers\User\CartController::class, 'cart'])
-        ->name('cart');
 });
+
+
+// Cart
+Route::post('/cart/store', [\App\Http\Controllers\User\CartController::class, 'cartStore'])
+    ->name('cart.store');
+
+Route::post('/cart/delete', [\App\Http\Controllers\User\CartController::class, 'cartDelete'])
+    ->name('cart.delete');
+
+Route::get('/cart', [\App\Http\Controllers\User\CartController::class, 'cart'])
+    ->name('cart');
+
+Route::post('/cart/update', [\App\Http\Controllers\User\CartController::class, 'cartUpdate'])
+    ->name('cart.update');
+
+
+// Coupon
+Route::post('/coupon/add', [\App\Http\Controllers\User\CartController::class, 'couponAdd'])
+    ->name('coupon.add');

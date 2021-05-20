@@ -4,7 +4,7 @@
     @include('frontend.includes.head')
 </head>
 <body>
-    @include('frontend.layouts.header')
+    @include('frontend.includes.header')
 
     <div class="container">
         <div style="transform: translateY(50px)">

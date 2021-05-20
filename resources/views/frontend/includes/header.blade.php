@@ -49,7 +49,7 @@
                                         </div>
 
                                         <div class="col-md-6">
-                                            <a class="" href={{ $item->model->slug }}>
+                                            <a class="" href={{ route('product', $item->model->slug) }}>
                                                 {{ $item->name }}
                                             </a>
 
@@ -71,8 +71,15 @@
 
                             <li class="dropdown-item">
                                 <span>
-                                    Total sum
+                                    Total cost
                                     ${{ number_format(\Gloudemans\Shoppingcart\Facades\Cart::subtotal(), 2) }}
+                                    <br>
+                                    Total cost with coupon
+                                    @if(session()->has('coupon'))
+                                        ${{ number_format(\Gloudemans\Shoppingcart\Facades\Cart::subtotal()-session('coupon')['value'], 2) }}
+                                    @else
+                                        ${{ number_format(\Gloudemans\Shoppingcart\Facades\Cart::subtotal(), 2) }}
+                                    @endif
                                 </span><br>
 
                                 <button class="btn btn-success btn-sm">

@@ -15,4 +15,17 @@ class Coupon extends Model
         'status',
         'value'
     ];
+
+    public function discount($total)
+    {
+        if ($this->type == 'fixed') {
+            return $this->value;
+        }
+        elseif ($this->type == 'percent') {
+            return ($this->value/100)*$total;
+        }
+        else {
+            return 0;
+        }
+    }
 }
