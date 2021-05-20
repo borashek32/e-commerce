@@ -95,7 +95,7 @@ class ProductController extends Controller
 
     public function product($slug)
     {
-        $product = Product::with('relatedProducts')
+        $item = Product::with('relatedProducts')
             ->where('slug', $slug)->first();
 
         $banners = Banner::where([
@@ -113,6 +113,6 @@ class ProductController extends Controller
             ->get();
 
         return view('frontend.products.product',
-            compact('banners','categories', 'brands', 'product'));
+            compact('banners','categories', 'brands', 'item'));
     }
 }

@@ -4,7 +4,9 @@
     @include('frontend.includes.head')
 </head>
 <body>
-    @include('frontend.includes.nav')
+    <header id="header-ajax">
+        @include('frontend.layouts.header')
+    </header>
 
     <div class="row">
         <div class="col-md-8">
@@ -34,6 +36,38 @@
 
         @include('frontend.includes.footer')
     </div>
-@yield('scripts')
+    @yield('scripts')
+
+    <script>
+        $(document).on('click', '.cart_delete', function (e) {
+            e.preventDefault();
+            var cart_id = $(this).data('id');
+
+            $.ajax({
+                url: "{{ route('cart.delete') }}",
+                type:"POST",
+                dataType:"JSON",
+                data:{
+                    cart_id: cart_id,
+                    _token: "{{ csrf_token() }}",
+                },
+                success:function (data) {
+                    if (data['status']) {
+                        $('body #header-ajax').html(data['header']);
+                        $('body #cart-counter').html(data['cart_count']);
+                        swal({
+                            title: "Good job!",
+                            text: data['message'],
+                            icon: "success",
+                            button: "OK!",
+                        });
+                    }
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        });
+    </script>
 </body>
 </html>

@@ -55,4 +55,9 @@ class Product extends Model
         return $this->hasMany(Product::class, 'category_id', 'category_id')
             ->limit(10);
     }
+
+    public static function getProductByCart($id)
+    {
+        return self::where('id', $id)->get()->toArray();
+    }
 }

@@ -84,6 +84,9 @@ $('.dltBtn_category').click(function (e) {
 })
 
 
- // Products
+ // Product add to cart
+
+
+
  // toggle d-none for subcategories
 

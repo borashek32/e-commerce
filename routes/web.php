@@ -21,9 +21,6 @@ Route::post('/register/user', [\App\Http\Controllers\Frontend\IndexController::c
 
 
 // Frontend
-//Route::get('/home', [\App\Http\Controllers\Frontend\IndexController::class, 'index'])
-//    ->name('e-app');
-
 Route::get('/', [App\Http\Controllers\Frontend\IndexController::class, 'index'])
     ->name('home');
 
@@ -80,6 +77,11 @@ Route::group(['prefix' => 'admin/', 'middleware' => ['auth', 'admin']], function
 
     // Vendors
     Route::resource('/vendors', \App\Http\Controllers\Admin\VendorController::class);
+
+    // Coupons
+    Route::resource('/coupons', \App\Http\Controllers\Admin\CouponController::class);
+    Route::post('coupon_status', [\App\Http\Controllers\Admin\CouponController::class, 'couponStatus'])
+        ->name('coupons.status');
 });
 
 
@@ -88,6 +90,7 @@ Route::group(['prefix' => 'vendor/', 'middleware' => ['auth', 'vendor']], functi
     Route::get('/', [\App\Http\Controllers\Admin\AdminController::class, 'vendor'])
         ->name('seller');
 });
+
 
 // User dashboard
 Route::group(['prefix' => 'user'], function () {
@@ -111,4 +114,15 @@ Route::group(['prefix' => 'user'], function () {
 
     Route::post('/update/account/{id}', [\App\Http\Controllers\User\UserController::class, 'updateAccount'])
         ->name('account.update');
+
+
+    // Cart
+    Route::post('/cart/store', [\App\Http\Controllers\User\CartController::class, 'cartStore'])
+        ->name('cart.store');
+
+    Route::post('/cart/delete', [\App\Http\Controllers\User\CartController::class, 'cartDelete'])
+        ->name('cart.delete');
+
+    Route::get('/cart', [\App\Http\Controllers\User\CartController::class, 'cart'])
+        ->name('cart');
 });
